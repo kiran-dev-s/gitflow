@@ -36,7 +36,7 @@ app.use(cookieParser('your-secret-dontknow'));
 	app.locals.db = pgClient;
 	app.locals.redisdb = client;
 	app.listen(port, function () {
-		console.log('server started  on', port);
+		console.log('server started  on::::::', port);
 	})
 })();
 
