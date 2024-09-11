@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <title>Nodejs Crud Application</title>
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">CrudApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="btn btn-primary rounded-0" data-toggle="modal" data-target="#createUser">Create User</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+
+      <div class="form-group col-md-3 mt-5">
+        <label for="exampleInputEmail1">Search</label>
+        <input type="email" class="form-control rounded-0" id="searchbox">
+      </div>
+
+        <table class="table table-striped mt-5 table-bordered" id="userTable">
+            <thead>
+                <tr class="bg-dark text-light">
+                    <th>Sr</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let count = 1%>
+                <% for (let user of userList) {%>
+                <tr>
+                    <td><%- count++ %></td>
+                    <td><%- user.fname %></td>
+                    <td><%- user.lname %></td>
+                    <td><%- user.email %></td>
+                    <td><%- user.phone %></td>
+                    <td><a data-id="<%- user.id %>" id="getuserDataedit"><i class="bi bi-pencil-square"></i></a>
+                        <a data-id="<%- user.id %>" id="getuserData"><i class="bi bi-eye"></i></a>
+                        <a data-id="<%- user.id %>" id="deleteuser"><i class="bi bi-x"></i></a>
+                    </td>
+                </tr>
+                <%}%>
+            </tbody>
+          </table>
+      </div>
+
+
+      <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content rounded-0">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create user</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" class="form-control rounded-0" id="fname">
+                    </div>
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="lname" class="form-control rounded-0" id="lname">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="lname" class="form-control rounded-0" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="lname" class="form-control rounded-0" id="phone">
+                    </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary createNewUser rounded-0" >Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content rounded-0">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">View user</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <p id="vfname"></p>
+                    </div>
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <p id="vlname"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <p id="vemail"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <p id="vphone"></p>
+                    </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary createNewUser rounded-0" >Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="modal fade" id="openeditmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content rounded-0">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Modal</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                      <label>First Name</label>
+                      <input type="text" class="form-control rounded-0" id="efname">
+                      <input type="hidden" id="eedi">
+                    </div>
+                    <div class="form-group">
+                      <label>Last Name</label>
+                      <input type="lname" class="form-control rounded-0" id="elname">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="lname" class="form-control rounded-0" id="eemail">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="lname" class="form-control rounded-0" id="ephone">
+                    </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary updateNewUser rounded-0" >Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+  $(document).ready(function(){
+
+    $(".createNewUser").on('click',function(){
+        $.ajax({
+  type: "POST",
+  url: "/api/people",
+  data: {
+    fname: $("#fname").val(),
+    lname: $("#lname").val(),
+    email: $("#email").val(),
+    phone: $("#phone").val()
+  },
+  success: function(res){
+      console.log(res)
+      if(res.status==="200"){
+        swal("Good job!", "Successfully Created", "success").then(function(){location.reload()});
+      }else{
+        swal("Fail!", "Something went wrong", "error").then(function(){location.reload()});
+      }
+  },
+  dataType: "json"
+});
+    })
+
+
+//GET USERDATA
+    $("#userTable").on('click','#getuserData',function(){
+let id =  $(this).attr("data-id")
+        console.log('id--->>>>>',id)
+
+        $.ajax({
+  type: "POST",
+  url: "/api/singlepeople",
+  data: {
+    id: $(this).attr("data-id")
+  },
+  success: function(res){
+      console.log(res)
+      $("#vfname").html(res.fname)
+      $("#vlname").html(res.lname)
+      $("#vemail").html(res.email)
+      $("#vphone").html(res.phone)
+      $("#viewUser").modal('show')
+  },
+  dataType: "json"
+});
+    })
+
+
+    //GET FOR EDIT
+    $("#userTable").on('click','#getuserDataedit',function(){
+let id =  $(this).attr("data-id")
+        console.log('id--------',id)
+
+        $.ajax({
+  type: "POST",
+  url: "/api/singlepeople",
+  data: {
+    id: id
+  },
+  success: function(res){
+      console.log(res)
+      $("#eedi").val(res.id)
+      $("#efname").val(res.fname)
+      $("#elname").val(res.lname)
+      $("#eemail").val(res.email)
+      $("#ephone").val(res.phone)
+      $("#openeditmodal").modal('show')
+  },
+  dataType: "json"
+});
+    })
+
+
+
+//Update user
+$(".updateNewUser").on('click',function(){
+  $.ajax({
+  type: "POST",
+  url: "/api/updatepeople",
+  data: {
+    eedi :$("#eedi").val(),
+    fname: $("#efname").val(),
+    lname: $("#elname").val(),
+    email: $("#eemail").val(),
+    phone: $("#ephone").val()
+  },
+  success: function(res){
+      console.log(res)
+      if(res.status==="200"){
+        swal("Good job!", "Update Successfully", "success").then(function(){location.reload()});
+      }else{
+        swal("Fail!", "Something went wrong", "error").then(function(){location.reload()});
+      }
+  },
+  dataType: "json"
+});
+    })
+
+
+
+   //DELETE USER
+   $("#userTable").on('click','#deleteuser',function(){
+    let id =  $(this).attr("data-id")
+        console.log('id--------',id)
+        $.ajax({
+            type: "POST",
+            url: "/api/delete",
+            data: {
+                id: id
+            },
+  success: function(res){
+    console.log(res)
+      if(res.status==="200"){
+        swal("Good job!", "Deleted Successfully", "success").then(function(){location.reload()});
+      }else{
+        swal("Fail!", "Something went wrong", "error").then(function(){location.reload()});
+      }
+  },
+  dataType: "json"
+});
+    })
+
+    $("#searchbox").on('keyup',function(){
+      let searchvalue = $("#searchbox").val()
+      console.log('Search Value',searchvalue)
+      $.ajax({
+  type: "POST",
+  url: "/api/searchuser",
+  data: {
+    searchvalue:searchvalue
+  },
+  success: function(response){
+console.log('RESP==>',response)
+
+let singleRecord = `
+<table >
+            <thead>
+                <tr class="bg-dark text-light">
+                    <th>Sr</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+response.forEach(function(data){
+  console.log(data)
+  singleRecord +=`
+  <tr>
+                    <td>${data.id}</td>
+                    <td>${data.fname}</td>
+                    <td>${data.lname}</td>
+                    <td>${data.email}</td>
+                    <td>${data.phone}</td>
+                    <td><a data-id="${data.id}" id="getuserDataedit"><i class="bi bi-pencil-square"></i></a>
+                        <a data-id="${data.id}" id="getuserData"><i class="bi bi-eye"></i></a>
+                        <a data-id="${data.id}" id="deleteuser"><i class="bi bi-x"></i></a>
+                    </td>
+                </tr>
+  `;
+})
+singleRecord +=` </tbody>
+          </table>`;
+
+$("#userTable").html(singleRecord)
+  },
+  dataType: "json"
+});
+
+    })
+  })
+</script>
+  </body>
+</html>
