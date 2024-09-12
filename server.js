@@ -8,7 +8,7 @@ const indexRouter = require('./app/routers/indexRouter');
 
 
 
-const port = 3000;
+const port = 3002;
 const app = express();
 var client = redis.createClient(6379, process.env.REDIS_IP);
 
@@ -36,7 +36,7 @@ app.use(cookieParser('your-secret-dontknow'));
 	app.locals.db = pgClient;
 	app.locals.redisdb = client;
 	app.listen(port, function () {
-		console.log('server started at ', port);
+		console.log('server started  on::::::', port);
 	})
 })();
 
