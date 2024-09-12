@@ -8,7 +8,7 @@ const indexRouter = require('./app/routers/indexRouter');
 
 
 
-const port = 3000;
+const port = 3002;
 const app = express();
 var client = redis.createClient(6379, process.env.REDIS_IP);
 
