@@ -17,6 +17,7 @@ app.use(express.urlencoded({
 	extended: false
 }));
 console.log('Port  =>', port);
+console.log('Port2  =>', port);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
