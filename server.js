@@ -29,7 +29,7 @@ app.use(cookieParser('your-secret-dontknow'));
 		if (err) {
 			console.log('redis connection errr => ', err);
 		} else {
-			console.log('redis connection reply ==> ', result);
+			console.log('redis  =>', result);
 		}
 	})
 	const pgClient = await dbConfig.pgPool.connect();
